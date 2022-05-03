@@ -20,39 +20,92 @@ const post = [
     {
       id: "19",
       nome: "memezar",
-      foto: "https://unsplash.it/300/300?image=",
+      foto: "https://unsplash.it/300/300?image=2",
       data: "05-03-2022",
       testo: "And they say romance is dead",
-      immagine: "https://unsplash.it/300/300?image=",
+      immagine: "https://unsplash.it/300/300?image=5",
       like: 34,
     },
     {
         id: "32",
         nome: "9gag",
-        foto: "https://unsplash.it/300/300?image=",
+        foto: "https://unsplash.it/300/300?image=16",
         data: "05-01-2022",
         testo: "Good old times",
-        immagine: "https://unsplash.it/300/300?image=",
+        immagine: "https://unsplash.it/300/300?image=32",
         like: 78,
       },
       {
         id: "45",
         nome: "will_ita",
-        foto: "https://unsplash.it/300/300?image=",
+        foto: "https://unsplash.it/300/300?image=445",
         data: "05-03-2022",
         testo: "Secondo la FAO gli sprechi alimentari nel mondo ammontano a più di 1.3 miliardi di tonnellate all'anno, pari a circa un terzo della produzione totale.",
-        immagine: "https://unsplash.it/300/300?image=",
+        immagine: "https://unsplash.it/300/300?image=56",
         like: 71,
       },
       {
         id: "89",
         nome: "theoffice",
-        foto: "https://unsplash.it/300/300?image=",
+        foto: "https://unsplash.it/300/300?image=123",
         data: "05-01-2022",
         testo: "Jim's advice >>>",
-        immagine: "https://unsplash.it/300/300?image=",
+        immagine: "https://unsplash.it/300/300?image=99",
         like: 99,
       }
 ];
 
-console.log(post);
+
+// Prelevo il contenitore dall'html
+const postContainer = document.getElementById("container");
+console.log(postContainer);
+
+
+// Creo una funzione per stampare i post nella pagina
+printPost(postContainer, post);
+
+
+function printPost (container, array) {
+    // Con ciclo forEach ciclo tutti gli oggetti nell'array
+    array.forEach(element => {
+        //Creo un'altra funzione con il compito di creare gli elementi del dom
+        const newElement = createDomElement(element);
+        container.append(newElement);
+    });
+}
+
+// Funzione che crea gli elementi del dom
+function createDomElement(item) {
+    const domElement = document.createElement("div");
+    domElement.classList.add("post");
+    domElement.innerHTML = `
+    <div class="post__header">
+        <div class="post-meta">                    
+            <div class="post-meta__icon">
+                <img class="profile-pic" src="${item.foto}">                    
+            </div>
+            <div class="post-meta__data">
+                <div class="post-meta__author">${item.nome}</div>
+                <div class="post-meta__time">${item.data}</div>
+            </div>                    
+    </div>
+    <div class="post__text">${item.testo}</div>
+        <div class="post__image">
+            <img src="${item.immagine}" alt="">
+        </div>
+    <div class="post__footer">
+        <div class="likes js-likes">
+            <div class="likes__cta">
+                <a class="like-button  js-like-button" href="#" data-postid="1">
+                    <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
+                    <span class="like-button__label">Mi Piace</span>
+                </a>
+            </div>
+            <div class="likes__counter">
+                Piace a <b id="like-counter-1" class="js-likes-counter">${item.like}</b> persone
+            </div>
+        </div> 
+    </div>            
+    `;
+    return domElement;
+};
